@@ -1,5 +1,3 @@
-# _odin
-
 # _Odin
 
 ## Structure
