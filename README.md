@@ -5,8 +5,8 @@
 This is how we are implementing IaC at _Odin.
 
 * **One of our premises is that we want the same code as the production environment in our staging/development environment.**
-
 ### Below we have a example of how we organize the folder structure of each account
+
 
 ```sh
 .
