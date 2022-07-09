@@ -9,7 +9,7 @@ terraform {
     key    = "global/services/consulteanuvem-main.tfstate"
     region = "us-east-1"
     encrypt        = true
-    dynamodb_table = "global-state-consulteanuvem-lock-dynamo"
+    #dynamodb_table = "global-state-consulteanuvem-lock-dynamo"
   }
 }
 
