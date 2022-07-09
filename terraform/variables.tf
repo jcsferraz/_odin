@@ -12,3 +12,13 @@ variable "cidr_blocks" {
   description = "The CIDR blocks to create the workstations in."
   default     = ["11.1.1.0/23", "11.2.1.0/23"]
 }
+variable "public_subnets" {
+  description = "The CIDR blocks to create the workstations in."
+  default     = ["11.1.1.0/23", "11.2.1.0/23"]
+  
+}
+variable "private_subnets" {
+  description = "The CIDR blocks to create the workstations in."
+  default     = ["11.1.1.0/23", "11.2.1.0/23"]
+  
+}
