@@ -14,7 +14,7 @@ terraform {
 }
 
 module "network_vpc_dev" {
-  source  = "./account/vops-cloud/network/vpc/envs/dev/vpc/src"
+  source  = "./account/vops-cloud/network/envs/dev/vpc/src"
 }
 
 module "dynamodb_global_tables_dev" {
