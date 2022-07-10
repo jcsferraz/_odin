@@ -15,7 +15,6 @@ resource "aws_dynamodb_table" "global-state-consulteanuvem-lock-dynamo" {
     Application_Role = "Locks para o Terraform State Files"
     Team             = "consulteanuvem-com-br"
     Customer_Group   = "consulteanuvem-globals"
-    RESOURCE         = "environments_at_cloud"
-    BU               = "global"
+    Resource         = "environments_at_cloud"
   }
 }
