@@ -6,7 +6,7 @@ yum -y install wget git net-tools bind-utils iptables-services bridge-utils bash
 
 echo "Install Ansible Client "
 yum install -y epel-release --nogpgcheck
-yum install openshift-ansible -y --nogpgcheck
+sudo amazon-linux-extras install ansible2 -y
 
 echo "Install git/wget and curl"
 yum install -y git wget curl --nogpgcheck

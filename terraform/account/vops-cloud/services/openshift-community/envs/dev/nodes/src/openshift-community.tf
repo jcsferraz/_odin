@@ -47,7 +47,7 @@ resource "aws_instance" "openshift-community-nodes-instance" {
 
         }
 
-  associate_public_ip_address = false // nao associar ip publico na instancia
+  associate_public_ip_address = true // nao associar ip publico na instancia
 
   tags = {
     Name = "openshift-community-node-dev"
