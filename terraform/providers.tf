@@ -18,6 +18,6 @@ module "network_vpc_dev" {
 }
 
 module "dynamodb_global_tables_dev" {
-  source  = "./account/vops-cloud/data-stores/dynamodb/envs/dev/dynamodb/src"
+  source  = "./account/vops-cloud/data-stores/envs/dev/dynamodb/src"
 }
 
