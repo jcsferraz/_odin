@@ -15,8 +15,20 @@ terraform {
 
 module "network_vpc_dev" {
   source  = "./account/vops-cloud/network/envs/dev/vpc/src"
-}
+  vpc_cidr_block = var.vpc_cidr_block
+  cidr_blocks    = var.cidr_blocks
+  public_subnets = [
+    { cidr_blocks = "11.0.2.0/23", zone = "us-east-1a", name = "subnet-dev-a-pub" },
+    { cidr_blocks = "11.0.4.0/23", zone = "us-east-1b", name = "subnet-dev-b-pub" },
+    { cidr_blocks = "11.0.6.0/23", zone = "us-east-1c", name = "subnet-dev-c-pub" }
+  ]
 
+  private_subnets = [
+    { cidr_blocks = "11.0.8.0/23", zone = "us-east-1a", name = "subnet-dev-a-priv" },
+    { cidr_blocks = "11.0.10.0/23", zone = "us-east-1b", name = "subnet-dev-b-priv" },
+    { cidr_blocks = "11.0.12.0/23", zone = "us-east-1c", name = "subnet-dev-c-priv" }
+  ]
+}
 module "dynamodb_global_tables_dev" {
   source  = "./account/vops-cloud/data-stores/envs/dev/dynamodb/src"
 }

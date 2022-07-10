@@ -2,17 +2,20 @@ resource "aws_vpc" "vpc" {
   cidr_block           = var.vpc_cidr_block
   enable_dns_hostnames = true
   enable_dns_support   = true
-  tags =  {
+  tags ={
+      Name="vpc-dev" 
   }
 }
 resource "aws_internet_gateway" "igw" {
   vpc_id = aws_vpc.vpc.id
   tags = {
+         Name ="igw-dev"
   }
 }
 resource "aws_route_table" "rtb_public" {
   vpc_id = aws_vpc.vpc.id
   tags =  {
+          Name ="rtb-dev"
   }
 }
 resource "aws_route" "route_public" {
@@ -30,9 +33,9 @@ resource "aws_subnet" "public_subnets" {
   vpc_id                  = aws_vpc.vpc.id
   availability_zone       = each.value.zone
   map_public_ip_on_launch = true
-  cidr_block              = each.value.cidr_block
-  tags = {
-
+  cidr_block              = each.value.cidr_blocks
+  tags =  {
+          Name ="subnet-dev-pub"
   }
 }
 resource "aws_subnet" "private_subnets" {
@@ -40,8 +43,8 @@ resource "aws_subnet" "private_subnets" {
   vpc_id                  = aws_vpc.vpc.id
   availability_zone       = each.value.zone
   map_public_ip_on_launch = false
-  cidr_block              = each.value.cidr_block
+  cidr_block              = each.value.cidr_blocks
   tags =  {
-
+          Name ="subnet-dev-prv"
   }
 }
