@@ -13,3 +13,11 @@ terraform {
   }
 }
 
+module "network_vpc_dev" {
+  source  = "./account/vops-cloud/network/vpc/envs/dev/vpc/src"
+}
+
+module "dynamodb_global_tables_dev" {
+  source  = "./account/vops-cloud/data-stores/dynamodb/envs/dev/dynamodb/src"
+}
+
