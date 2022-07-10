@@ -25,3 +25,12 @@ yum install docker -y --nogpgcheck
 systemctl enable docker
 systemctl start docker
 usermod -a -G docker ec2-user
+
+echo "Setting Agent Openshift"
+
+ssh-keygen -t rsa -b 4096 -N ‘’ -f ~/.ssh/id_rsa
+eval “$(ssh-agent -s)”
+ssh-add ~/.ssh/id_rsa
+curl -O https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/openshift-client-linux.tar.gz
+tar -xvzf openshift-client-linux.tar.gz
+cp -rf oc /usr/local/bin/oc ; chmod +x /usr/local/bin/oc ; cp -rf kubectl /usr/local/bin/kubectl; chmod +x /usr/local/bin/kubectl
