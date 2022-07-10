@@ -35,7 +35,7 @@ resource "aws_subnet" "public_subnets" {
   map_public_ip_on_launch = true
   cidr_block              = each.value.cidr_blocks
   tags =  {
-          Name ="subnet-dev-pub"
+          Name ="${each.key}"
   }
 }
 resource "aws_subnet" "private_subnets" {
@@ -45,6 +45,6 @@ resource "aws_subnet" "private_subnets" {
   map_public_ip_on_launch = false
   cidr_block              = each.value.cidr_blocks
   tags =  {
-          Name ="subnet-dev-prv"
+          Name ="${each.key}"
   }
 }
