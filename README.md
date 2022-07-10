@@ -15,17 +15,17 @@ This is how we are implementing IaC at _Odin.
 ├── accounts
 │   ├── example
 │   │   ├── applications --> Contains all resources that are owned by an application
-│   │   │   ├── user-api
-│   │   │   └── health-api
+│   │   │   ├── web-app-api
+│   │   │   └── web-app-v2-api
 │   │   ├── data-stores --> Contains data stores resources that are shared or not by applications
-│   │   │   ├── rds
+│   │   │   ├── dynamodb
+|   |   |   ├── rds
 │   │   │   └── redis
 │   │   ├── environments --> Contains environments for one or more accounts
 │   │   │   ├── prod.hcl
 │   │   │   └── staging.hcl
 │   │   └── services --> Contains resources that are shared across applications
-│   │       ├── msk
-│   │       ├── eks
+│   │       ├── ec2s
 │   │       └── eks
 ....
 └── terragrunt.hcl
