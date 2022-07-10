@@ -3,19 +3,37 @@ resource "aws_vpc" "vpc" {
   enable_dns_hostnames = true
   enable_dns_support   = true
   tags ={
-      Name="vpc-dev" 
+      Name="vpc-dev"
+      Environment      = "dev"
+      Application_ID   = "vpc"
+      Application_Role = "Networking for environment dev"
+      Team             = "consulteanuvem-com-br-dev"
+      Customer_Group   = "consulteanuvem-dev"
+      Resource         = "environment_at_dev" 
   }
 }
 resource "aws_internet_gateway" "igw" {
   vpc_id = aws_vpc.vpc.id
   tags = {
-         Name ="igw-dev"
+         Name ="igw-pub-dev"
+         Environment      = "dev"
+         Application_ID   = "vpc"
+         Application_Role = "Networking for environment dev"
+         Team             = "consulteanuvem-com-br-dev"
+         Customer_Group   = "consulteanuvem-dev"
+         Resource         = "environment_at_dev" 
   }
 }
 resource "aws_route_table" "rtb_public" {
   vpc_id = aws_vpc.vpc.id
   tags =  {
-          Name ="rtb-dev"
+          Name ="route-pub-dev"
+          Environment      = "dev"
+          Application_ID   = "vpc"
+          Application_Role = "Networking for environment dev"
+          Team             = "consulteanuvem-com-br-dev"
+          Customer_Group   = "consulteanuvem-dev"
+          Resource         = "environment_at_dev" 
   }
 }
 resource "aws_route" "route_public" {
@@ -36,6 +54,12 @@ resource "aws_subnet" "public_subnets" {
   cidr_block              = each.value.cidr_blocks
   tags =  {
           Name ="${each.key}"
+          Environment      = "dev"
+          Application_ID   = "vpc"
+          Application_Role = "Networking for environment dev"
+          Team             = "consulteanuvem-com-br-dev"
+          Customer_Group   = "consulteanuvem-dev"
+          Resource         = "environment_at_dev" 
   }
 }
 resource "aws_subnet" "private_subnets" {
@@ -46,5 +70,11 @@ resource "aws_subnet" "private_subnets" {
   cidr_block              = each.value.cidr_blocks
   tags =  {
           Name ="${each.key}"
+          Environment      = "dev"
+          Application_ID   = "vpc"
+          Application_Role = "Networking for environment dev"
+          Team             = "consulteanuvem-com-br-dev"
+          Customer_Group   = "consulteanuvem-dev"
+          Resource         = "environment_at_dev" 
   }
 }
