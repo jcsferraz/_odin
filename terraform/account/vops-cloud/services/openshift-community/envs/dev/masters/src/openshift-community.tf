@@ -19,12 +19,12 @@ data "aws_ami" "amazon-linux-2" {
 resource "aws_instance" "openshift-community-nodes-instance" {
   ami             = data.aws_ami.amazon-linux-2.id
   instance_type   = "t3a.medium"
-  count           = 3 
-  iam_instance_profile = aws_iam_instance_profile.openshift-community-nodes.name
+  count           = 1 
+  iam_instance_profile = aws_iam_instance_profile.openshift-community-nodes_deploy_server.name
   key_name        = "openshift-community-nodes-dev"
   subnet_id       = "subnet-0a9ba9d2e5dcd203a"
-  vpc_security_group_ids = [aws_security_group.openshift-community-nodes-allow-access-sg.id]
-  user_data = file("./account/vops-cloud/services/openshift-community/envs/dev/nodes/src/install_openshift-community-nodes.sh")
+  vpc_security_group_ids = [aws_security_group.openshift-community-masters-allow-access-sg.id]
+  user_data = file("./account/vops-cloud/services/openshift-community/envs/dev/nodes/src/install_openshift-community-masters.sh")
   
 
    root_block_device {
@@ -66,7 +66,7 @@ resource "aws_ec2_serial_console_access" "openshift-community-nodes-access-seria
    enabled = true
 }
 
-resource "aws_security_group" "openshift-community-nodes-allow-access-sg" {
+resource "aws_security_group" "openshift-community-masters-allow-access-sg" {
   name        = "openshift-community-nodes-allow-access-sg"
   description = "allow ssh and openshift-community-nodes inbound traffic"
   vpc_id      = "vpc-058bb3f363566ef46"
@@ -75,7 +75,7 @@ resource "aws_security_group" "openshift-community-nodes-allow-access-sg" {
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
-    description = "rule for allow access in the openshift-community-nodes-api-server  from internal nvi-7-corporate environment"
+    description = "rule for allow access in the openshift-community-masters-api-server  from internal nvi-7-corporate environment"
     cidr_blocks = ["11.0.0.0/16"]
   }
   
@@ -83,7 +83,7 @@ resource "aws_security_group" "openshift-community-nodes-allow-access-sg" {
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
-    description = "rule for allow access in the openshift-community-nodes-api-server  from internal internal-vpcs-jacto-corp environment"
+    description = "rule for allow access in the openshift-community-masters-api-server  from internal internal-vpcs-jacto-corp environment"
     cidr_blocks = ["11.0.12.0/23"]
   }
   
@@ -91,7 +91,7 @@ resource "aws_security_group" "openshift-community-nodes-allow-access-sg" {
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
-    description = "rule for allow access in the openshift-community-nodes-api-server  from internal internal-vpcs-jacto-corp environment"
+    description = "rule for allow access in the openshift-community-masters-api-server  from internal internal-vpcs-jacto-corp environment"
     cidr_blocks = ["11.0.10.0/23"]
   }
   
@@ -99,7 +99,7 @@ resource "aws_security_group" "openshift-community-nodes-allow-access-sg" {
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
-    description = "rule for allow access in the openshift-community-nodes-api-server  from internal internal-vpcs-jacto-corp environment"
+    description = "rule for allow access in the openshift-community-masters-api-server  from internal internal-vpcs-jacto-corp environment"
     cidr_blocks = ["11.0.8.0/23"]
   }
   
@@ -107,7 +107,7 @@ resource "aws_security_group" "openshift-community-nodes-allow-access-sg" {
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
-    description = "rule for allow access in the openshift-community-nodes-api-server  from internal internal-vpcs-jacto-corp environment"
+    description = "rule for allow access in the openshift-community-masters-api-server  from internal internal-vpcs-jacto-corp environment"
     cidr_blocks = ["11.0.6.0/23"]
   }
   
@@ -115,7 +115,7 @@ resource "aws_security_group" "openshift-community-nodes-allow-access-sg" {
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
-    description = "rule for allow access in the openshift-community-nodes-api-server  from internal internal-vpcs-jacto-corp environment"
+    description = "rule for allow access in the openshift-community-masters-api-server  from internal internal-vpcs-jacto-corp environment"
     cidr_blocks = ["11.0.4.0/23"]
   }
   
@@ -123,7 +123,7 @@ resource "aws_security_group" "openshift-community-nodes-allow-access-sg" {
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
-    description = "rule for allow access in the openshift-community-nodes-api-server  from internal internal-vpcs-jacto-corp environment"
+    description = "rule for allow access in the openshift-community-masters-api-server  from internal internal-vpcs-jacto-corp environment"
     cidr_blocks = ["11.0.2.0/23"]
   }
   
@@ -131,12 +131,12 @@ resource "aws_security_group" "openshift-community-nodes-allow-access-sg" {
     from_port       = 0
     to_port         = 0
     protocol        = "-1"
-    description = "rule for allow access in the openshift-community-nodes-api-server  from internal vpc_nvi environment"
+    description = "rule for allow access in the openshift-community-masters-api-server  from internal vpc_nvi environment"
     cidr_blocks     = ["0.0.0.0/0"]
   }
 
    tags = {
-        Name = "openshift-community-nodes-allow-access-sg"
+        Name = "openshift-community-masters-allow-access-sg"
         Environment      = "dev"
         Application_ID   = "vpc"
         Application_Role = "Networking for environment dev"

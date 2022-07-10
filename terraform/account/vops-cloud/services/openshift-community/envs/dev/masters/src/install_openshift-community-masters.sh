@@ -35,16 +35,16 @@ curl -O https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/openshi
 tar -xvzf openshift-client-linux.tar.gz
 cp -rf oc /usr/local/bin/oc ; chmod +x /usr/local/bin/oc ; cp -rf kubectl /usr/local/bin/kubectl; chmod +x /usr/local/bin/kubectl
 
-echo "Setting NodeGroup Openshift 3.11"
+echo "Setting Openshift 3.11"
 
 git clone -b release-3.11 --single-branch https://github.com/openshift/openshift-ansible /usr/share/openshift-ansible
 cd /usr/share/openshift-ansible
-#sed -i 's/openshift.common.ip/openshift.common.public_ip/' roles/openshift_node_group/templates/node-config.yaml.j2
+sed -i 's/openshift.common.ip/openshift.common.public_ip/' roles/openshift_control_plane/templates/master.yaml.v1.j2
 
 ansible-playbook /usr/share/openshift-ansible/playbooks/prerequisites.yml
-#ansible-playbook /usr/share/openshift-ansible/playbooks/deploy_cluster.yml
+ansible-playbook /usr/share/openshift-ansible/playbooks/deploy_cluster.yml
 
-#htpasswd -Bbc /etc/origin/master/htpasswd vops vops
+htpasswd -Bbc /etc/origin/master/htpasswd vops vops
 
 
 #curl -O https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/openshift-install-linux.tar.gz
