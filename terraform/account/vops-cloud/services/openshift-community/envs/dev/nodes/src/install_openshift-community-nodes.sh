@@ -24,4 +24,4 @@ echo "Install Docker engine"
 yum install docker -y --nogpgcheck
 systemctl enable docker
 systemctl start docker
-usermod -a -G docker centos
+usermod -a -G docker ec2-user
