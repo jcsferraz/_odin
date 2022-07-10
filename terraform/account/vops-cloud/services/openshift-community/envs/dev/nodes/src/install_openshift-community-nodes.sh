@@ -34,3 +34,16 @@ ssh-add ~/.ssh/id_rsa
 curl -O https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/openshift-client-linux.tar.gz
 tar -xvzf openshift-client-linux.tar.gz
 cp -rf oc /usr/local/bin/oc ; chmod +x /usr/local/bin/oc ; cp -rf kubectl /usr/local/bin/kubectl; chmod +x /usr/local/bin/kubectl
+
+echo "Setting Openshift"
+
+curl -O https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/openshift-install-linux.tar.gz
+tar -xvzf openshift-install-linux.tar.gz
+cp -rf openshift-install /usr/local/bin/openshift-install ; chmod +x /usr/local/bin/openshift-install
+mkdir -p /opt/oc-community-cluster
+openshift-install create install-config --dir=/opt/oc-community-cluster
+openshift-install create manifests --dir=/opt/oc-community-cluster
+rm -f /opt/oc-community-cluster/openshift/99_openshift-cluster-api_master-machines-*.yaml
+rm -f /opt/oc-community-cluster/openshift/99_openshift-cluster-api_worker-machineset-*.yaml
+openshift-install create ignition-configs --dir=/opt/oc-community-cluster
+openshift-install wait-for bootstrap-complete --dir=/opt/oc-community-cluster --log-level=info 
