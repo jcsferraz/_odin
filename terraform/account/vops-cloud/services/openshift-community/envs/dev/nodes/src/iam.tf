@@ -1,4 +1,4 @@
-data "aws_iam_policy_document" "openshift-community-nodes_deploy-ci-cd_server" {
+data "aws_iam_policy_document" "openshift-community-nodes_deploy_server" {
 
     version = "2012-10-17"
 
@@ -17,34 +17,34 @@ data "aws_iam_policy_document" "openshift-community-nodes_deploy-ci-cd_server" {
 
 }
 
-resource "aws_iam_role" "openshift-community-nodes_deploy-ci-cd_server" {
-        name = "openshift-community-nodes_deploy-ci-cd_server"
-        assume_role_policy = data.aws_iam_policy_document.openshift-community-nodes_deploy-ci-cd_server.json
+resource "aws_iam_role" "openshift-community-nodes_deploy_server" {
+        name = "openshift-community-nodes_deploy_server"
+        assume_role_policy = data.aws_iam_policy_document.openshift-community-nodes_deploy_server.json
 
     }
 
-resource "aws_iam_role_policy_attachment" "openshift-community-nodes_deploy-ci-cd_server_lambda" {
+resource "aws_iam_role_policy_attachment" "openshift-community-nodes_deploy_server_lambda" {
     policy_arn = "arn:aws:iam::aws:policy/AWSLambda_FullAccess"
-    role = aws_iam_role.openshift-community-nodes_deploy-ci-cd_server.name
+    role = aws_iam_role.openshift-community-nodes_deploy_server.name
 }
 
-resource "aws_iam_role_policy_attachment" "openshift-community-nodes_deploy-ci-cd_server_agent-gw" {
+resource "aws_iam_role_policy_attachment" "openshift-community-nodes_deploy_server_agent-gw" {
     policy_arn = "arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy"
-    role = aws_iam_role.openshift-community-nodes_deploy-ci-cd_server.name
+    role = aws_iam_role.openshift-community-nodes_deploy_server.name
 }
 
-resource "aws_iam_role_policy_attachment" "openshift-community-nodes_deploy-ci-cd_server_ecr-read" {
+resource "aws_iam_role_policy_attachment" "openshift-community-nodes_deploy_server_ecr-read" {
     policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
-    role = aws_iam_role.openshift-community-nodes_deploy-ci-cd_server.name
+    role = aws_iam_role.openshift-community-nodes_deploy_server.name
 }
 
-resource "aws_iam_role_policy_attachment" "openshift-community-nodes_deploy-ci-cd_server_ssm-full" {
+resource "aws_iam_role_policy_attachment" "openshift-community-nodes_deploy_server_ssm-full" {
     policy_arn = "arn:aws:iam::aws:policy/AmazonSSMFullAccess"
-    role = aws_iam_role.openshift-community-nodes_deploy-ci-cd_server.name
+    role = aws_iam_role.openshift-community-nodes_deploy_server.name
 }
 
-resource "aws_iam_policy" "openshift-community-nodes_deploy-ci-cd_server_anothers_policy" {
-  name        = "openshift-community-nodes_deploy-ci-cd_server_anothers_policy"
+resource "aws_iam_policy" "openshift-community-nodes_deploy_server_anothers_policy" {
+  name        = "openshift-community-nodes_deploy_server_anothers_policy"
   description = "policy full resources to api xray,ssm,appmesh,service-discovery,s3,prometheus,kafka,lambda,elbs-albs-nlbs,sqs,asgs in your behalf."
 
   policy = <<EOF
@@ -166,8 +166,8 @@ resource "aws_iam_policy" "openshift-community-nodes_deploy-ci-cd_server_another
 EOF
 }
 
-resource "aws_iam_policy" "openshift-community-nodes_deploy-ci-cd_server_anothers_wafv2_policy" {
-  name        = "openshift-community-nodes_deploy-ci-cd_server_anothers_wafv2_policy"
+resource "aws_iam_policy" "openshift-community-nodes_deploy_server_anothers_wafv2_policy" {
+  name        = "openshift-community-nodes_deploy_server_anothers_wafv2_policy"
   description = "policy full resources to api wafv2 in your behalf."
 
  policy = <<EOF
@@ -314,8 +314,8 @@ resource "aws_iam_policy" "openshift-community-nodes_deploy-ci-cd_server_another
 EOF
 }
 
-resource "aws_iam_policy" "openshift-community-nodes_deploy-ci-cd_server_elbsv2_policy" {
-  name        = "openshift-community-nodes_deploy-ci-cd_server_elbsv2-group_policy"
+resource "aws_iam_policy" "openshift-community-nodes_deploy_server_elbsv2_policy" {
+  name        = "openshift-community-nodes_deploy_server_elbsv2-group_policy"
   description = "policy full resources to api elbsv2 in your behalf."
 
  policy = <<EOF
@@ -541,22 +541,22 @@ resource "aws_iam_policy" "openshift-community-nodes_deploy-ci-cd_server_elbsv2_
 EOF
 }
 
-resource "aws_iam_role_policy_attachment" "openshift-community-nodes_deploy-ci-cd_server_elbsv2_policy" {
-    role = aws_iam_role.openshift-community-nodes_deploy-ci-cd_server.name
-    policy_arn = aws_iam_policy.openshift-community-nodes_deploy-ci-cd_server_elbsv2_policy.arn
+resource "aws_iam_role_policy_attachment" "openshift-community-nodes_deploy_server_elbsv2_policy" {
+    role = aws_iam_role.openshift-community-nodes_deploy_server.name
+    policy_arn = aws_iam_policy.openshift-community-nodes_deploy_server_elbsv2_policy.arn
 }
 
-resource "aws_iam_role_policy_attachment" "openshift-community-nodes_deploy-ci-cd_server_anothers_policy" {
-    role = aws_iam_role.openshift-community-nodes_deploy-ci-cd_server.name
-    policy_arn = aws_iam_policy.openshift-community-nodes_deploy-ci-cd_server_anothers_policy.arn
+resource "aws_iam_role_policy_attachment" "openshift-community-nodes_deploy_server_anothers_policy" {
+    role = aws_iam_role.openshift-community-nodes_deploy_server.name
+    policy_arn = aws_iam_policy.openshift-community-nodes_deploy_server_anothers_policy.arn
 }
 
-resource "aws_iam_role_policy_attachment" "openshift-community-nodes_deploy-ci-cd_server_anothers_wafv2_policy" {
-    role = aws_iam_role.openshift-community-nodes_deploy-ci-cd_server.name
-    policy_arn = aws_iam_policy.openshift-community-nodes_deploy-ci-cd_server_anothers_wafv2_policy.arn
+resource "aws_iam_role_policy_attachment" "openshift-community-nodes_deploy_server_anothers_wafv2_policy" {
+    role = aws_iam_role.openshift-community-nodes_deploy_server.name
+    policy_arn = aws_iam_policy.openshift-community-nodes_deploy_server_anothers_wafv2_policy.arn
 }
 
-resource "aws_iam_instance_profile" "openshift-community-nodes_deploy-ci-cd_server" {
-    name  = "openshift-community-nodes_deploy-ci-cd_server"
-    role = aws_iam_role.openshift-community-nodes_deploy-ci-cd_server.name
+resource "aws_iam_instance_profile" "openshift-community-nodes_deploy_server" {
+    name  = "openshift-community-nodes_deploy_server"
+    role = aws_iam_role.openshift-community-nodes_deploy_server.name
 }
