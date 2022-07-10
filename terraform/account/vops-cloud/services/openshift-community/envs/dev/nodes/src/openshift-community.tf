@@ -62,6 +62,10 @@ resource "aws_instance" "openshift-community-nodes-instance" {
   }
 }
 
+resource "aws_ec2_serial_console_access" "openshift-community-nodes-access-serial-console" {
+   enabled = true
+}
+
 resource "aws_security_group" "openshift-community-nodes-allow-access-sg" {
   name        = "openshift-community-nodes-allow-access-sg"
   description = "allow ssh and openshift-community-nodes inbound traffic"
