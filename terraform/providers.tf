@@ -36,4 +36,9 @@ module "dynamodb_global_tables_dev" {
 
 module "openshift-community_nodes_dev" {
   source  = "./account/vops-cloud/services/openshift-community/envs/dev/nodes/src"
+  vpc  = var.vpc
+  vpc_cidr_block = var.vpc_cidr_block
+  cidr_blocks    = var.cidr_blocks
+  private_subnets = var.private_subnets
+  public_subnets  = var.public_subnets
 }

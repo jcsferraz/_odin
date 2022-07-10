@@ -24,7 +24,7 @@ resource "aws_instance" "openshift-community-nodes-instance" {
   key_name        = "openshift-community-nodes-dev"
   subnet_id       = "subnet-0a9ba9d2e5dcd203a"
   vpc_security_group_ids = [aws_security_group.openshift-community-nodes-allow-access-sg.id]
-  user_data = file("install_openshift-community-nodes.sh")
+  user_data = file("./account/vops-cloud/services/openshift-community/envs/dev/nodes/src/install_openshift-community-nodes.sh")
   
 
    root_block_device {
@@ -42,7 +42,7 @@ resource "aws_instance" "openshift-community-nodes-instance" {
     Team             = "consulteanuvem-com-br-dev"
     Customer_Group   = "consulteanuvem-dev"
     Resource         = "environment_at_dev"
-    kubernetes.io/cluster/community-openshift-cluster = "owned"
+    "kubernetes.io/cluster/community-openshift-cluster" = "owned"
   }
 
         }
@@ -57,7 +57,7 @@ resource "aws_instance" "openshift-community-nodes-instance" {
     Team             = "consulteanuvem-com-br-dev"
     Customer_Group   = "consulteanuvem-dev"
     Resource         = "environment_at_dev"
-    kubernetes.io/cluster/community-openshift-cluster = "owned"
+    "kubernetes.io/cluster/community-openshift-cluster" = "owned"
    
   }
 }
@@ -65,7 +65,7 @@ resource "aws_instance" "openshift-community-nodes-instance" {
 resource "aws_security_group" "openshift-community-nodes-allow-access-sg" {
   name        = "openshift-community-nodes-allow-access-sg"
   description = "allow ssh and openshift-community-nodes inbound traffic"
-  vpc_id = var.vpc_nvi
+  vpc_id      = var.vpc
   
   ingress {
     from_port   = 0
@@ -139,7 +139,7 @@ resource "aws_security_group" "openshift-community-nodes-allow-access-sg" {
         Team             = "consulteanuvem-com-br-dev"
         Customer_Group   = "consulteanuvem-dev"
         Resource         = "environment_at_dev" 
-        kubernetes.io/cluster/community-openshift-cluster = "owned"
+        "kubernetes.io/cluster/community-openshift-cluster" = "owned"
        }
 
   
