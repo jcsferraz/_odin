@@ -9,7 +9,7 @@ terraform {
     key    = "global/services/consulteanuvem-main.tfstate"
     region = "us-east-1"
     encrypt        = true
-    #dynamodb_table = "global-state-consulteanuvem-lock-dynamo"
+    dynamodb_table = "global-state-files-consulteanuvem"
   }
 }
 
@@ -29,6 +29,7 @@ module "network_vpc_dev" {
     { cidr_blocks = "11.0.12.0/23", zone = "us-east-1c", name = "subnet-dev-c-priv" }
   ]
 }
+
 module "dynamodb_global_tables_dev" {
   source  = "./account/vops-cloud/data-stores/envs/dev/dynamodb/src"
 }
