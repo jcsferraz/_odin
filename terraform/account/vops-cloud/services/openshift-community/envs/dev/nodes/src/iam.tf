@@ -29,7 +29,7 @@ resource "aws_iam_role_policy_attachment" "openshift-community-nodes_deploy_serv
 }
 
 resource "aws_iam_role_policy_attachment" "openshift-community-nodes_deploy_server_instance_core" {
-    policy_arn = "arn:aws:iam::aws:policy/AmazonSSManagedInstanceCore"
+    policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
     role = aws_iam_role.openshift-community-nodes_deploy_server.name
 }
 
