@@ -24,7 +24,7 @@ resource "aws_instance" "openshift-community-nodes-instance" {
   key_name        = "openshift-community-nodes-dev"
   subnet_id       = "subnet-0a9ba9d2e5dcd203a"
   vpc_security_group_ids = [aws_security_group.openshift-community-masters-allow-access-sg.id]
-  user_data = file("./account/vops-cloud/services/openshift-community/envs/dev/nodes/src/install_openshift-community-masters.sh")
+  user_data = file("./account/vops-cloud/services/openshift-community/envs/dev/masters/src/install_openshift-community-masters.sh")
   
 
    root_block_device {
