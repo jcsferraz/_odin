@@ -16,7 +16,7 @@ yum install -y git wget curl --nogpgcheck
 yum -y install cri-o --nogpgcheck
 
 echo "Install aws ssm agent "
-yum install -y --nogpgcheck  https://s3.us-east-1.amazonaws.com/amazon-ssm-us-east-1/latest/linux_amd64/amazon-ssm-agent.rpm
+yum install -y https://s3.amazonaws.com/ec2-downloads-windows/SSMAgent/latest/linux_amd64/amazon-ssm-agent.rpm
 systemctl enable amazon-ssm-agent
 systemctl start amazon-ssm-agent
 
