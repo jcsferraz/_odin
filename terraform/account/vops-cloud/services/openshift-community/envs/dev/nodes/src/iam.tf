@@ -28,6 +28,11 @@ resource "aws_iam_role_policy_attachment" "openshift-community-nodes_deploy_serv
     role = aws_iam_role.openshift-community-nodes_deploy_server.name
 }
 
+resource "aws_iam_role_policy_attachment" "openshift-community-nodes_deploy_server_instance_core" {
+    policy_arn = "arn:aws:iam::aws:policy/AmazonSSManagedInstanceCore"
+    role = aws_iam_role.openshift-community-nodes_deploy_server.name
+}
+
 resource "aws_iam_role_policy_attachment" "openshift-community-nodes_deploy_server_agent-gw" {
     policy_arn = "arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy"
     role = aws_iam_role.openshift-community-nodes_deploy_server.name
@@ -35,11 +40,6 @@ resource "aws_iam_role_policy_attachment" "openshift-community-nodes_deploy_serv
 
 resource "aws_iam_role_policy_attachment" "openshift-community-nodes_deploy_server_ecr-read" {
     policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
-    role = aws_iam_role.openshift-community-nodes_deploy_server.name
-}
-
-resource "aws_iam_role_policy_attachment" "openshift-community-nodes_deploy_server_ssm-full" {
-    policy_arn = "arn:aws:iam::aws:policy/AmazonSSMFullAccess"
     role = aws_iam_role.openshift-community-nodes_deploy_server.name
 }
 
