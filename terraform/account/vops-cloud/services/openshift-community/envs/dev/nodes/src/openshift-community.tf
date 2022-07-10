@@ -18,12 +18,12 @@ data "aws_ami" "amazon-linux-2" {
 
 resource "aws_instance" "openshift-community-nodes-instance" {
   ami             = data.aws_ami.amazon-linux-2.id
-  instance_type   = "t3a.small"
+  instance_type   = "t3a.medium"
+  count           = 4 
   iam_instance_profile = aws_iam_instance_profile.openshift-community-nodes_deploy-ci-cd_server.name
   key_name        = "openshift-community-nodes-dev"
   subnet_id       = "subnet-0a9ba9d2e5dcd203a"
   vpc_security_group_ids = [aws_security_group.openshift-community-nodes-allow-access-sg.id]
-  #name            = "${var.name}"
   user_data = file("install_openshift-community-nodes.sh")
   
 
