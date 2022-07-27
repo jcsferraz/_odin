@@ -15,8 +15,9 @@ terraform {
 
 module "network_vpc_dev" {
   source  = "./account/vops-cloud/network/envs/dev/vpc/src"
-  vpc_cidr_block = var.vpc_cidr_block
-  cidr_blocks    = var.cidr_blocks
+  vpc_cidr_block           = var.vpc_cidr_block
+  cidr_blocks              = var.cidr_blocks
+  secondary_vpc_cidr_block = var.secondary_vpc_cidr_block
   public_subnets = [
     { cidr_blocks = "11.0.2.0/23", zone = "us-east-1a", name = "subnet-dev-a-pub" },
     { cidr_blocks = "11.0.4.0/23", zone = "us-east-1b", name = "subnet-dev-b-pub" },

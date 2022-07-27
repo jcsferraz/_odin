@@ -12,6 +12,12 @@ resource "aws_vpc" "vpc" {
       Resource         = "environment_at_dev" 
   }
 }
+
+resource "aws_vpc_ipv4_cidr_block_association" "secondary_vpc_cidr" {
+  vpc_id      = aws_vpc.vpc.id
+  cidr_block  = var.secondary_vpc_cidr_block
+}
+
 resource "aws_internet_gateway" "igw" {
   vpc_id = aws_vpc.vpc.id
   tags = {
