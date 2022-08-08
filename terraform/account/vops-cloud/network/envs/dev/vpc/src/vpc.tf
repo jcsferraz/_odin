@@ -30,6 +30,7 @@ resource "aws_internet_gateway" "igw" {
          Resource         = "environment_at_dev" 
   }
 }
+
 resource "aws_route_table" "rtb_public" {
   vpc_id = aws_vpc.vpc.id
   tags =  {
@@ -42,16 +43,19 @@ resource "aws_route_table" "rtb_public" {
           Resource         = "environment_at_dev" 
   }
 }
+
 resource "aws_route" "route_public" {
   route_table_id         = aws_route_table.rtb_public.id
   destination_cidr_block = "0.0.0.0/0"
   gateway_id             = aws_internet_gateway.igw.id
 }
+
 resource "aws_route_table_association" "rtb_associations_public" {
   for_each       = { for subnet in var.public_subnets : subnet.name => subnet }
   subnet_id      = aws_subnet.public_subnets[each.value.name].id
   route_table_id = aws_route_table.rtb_public.id
 }
+
 resource "aws_subnet" "public_subnets" {
   for_each                = { for subnet in var.public_subnets : subnet.name => subnet }
   vpc_id                  = aws_vpc.vpc.id
@@ -68,11 +72,26 @@ resource "aws_subnet" "public_subnets" {
           Resource         = "environment_at_dev" 
   }
 }
-  
-resource "aws_internet_gateway" "nat_gateway" {
-  vpc_id = aws_vpc.vpc.id
+
+resource "aws_eip" "eip_nat_gateway" {
+  vpc = true
+    tags = {
+         Name ="eip-nat-prv-dev"
+         Environment      = "dev"
+         Application_ID   = "vpc"
+         Application_Role = "Networking for environment dev"
+         Team             = "consulteanuvem-com-br-dev"
+         Customer_Group   = "consulteanuvem-dev"
+         Resource         = "environment_at_dev"
+  }
+}
+
+resource "aws_nat_gateway" "nat_gateway" {
+  connectivity_type    = "public"
+  allocation_id = aws_eip.eip_nat_gateway.id
+  subnet_id  = aws_subnet.public_subnets[element(keys(aws_subnet.public_subnets), 0)].id
   tags = {
-         Name ="igw-prv-dev"
+         Name ="nat-prv-dev"
          Environment      = "dev"
          Application_ID   = "vpc"
          Application_Role = "Networking for environment dev"
@@ -86,13 +105,22 @@ resource "aws_route_table" "nat_gateway" {
   vpc_id = aws_vpc.vpc.id
   route {
     cidr_block = "0.0.0.0/0"
-    gateway_id = aws_internet_gateway.nat_gateway.id
+    gateway_id = aws_nat_gateway.nat_gateway.id
+  }
+  tags =  {
+          Name ="route-prv-dev"
+          Environment      = "dev"
+          Application_ID   = "vpc"
+          Application_Role = "Networking for environment dev"
+          Team             = "consulteanuvem-com-br-dev"
+          Customer_Group   = "consulteanuvem-dev"
+          Resource         = "environment_at_dev" 
   }
 }
 
 resource "aws_route_table_association" "nat_gateway" {
   for_each       = { for subnet in var.private_subnets : subnet.name => subnet }
-  subnet_id      = aws_subnet.public_subnets[each.value.name].id
+  subnet_id      = aws_subnet.private_subnets[each.value.name].id
   route_table_id = aws_route_table.nat_gateway.id
 }
   
