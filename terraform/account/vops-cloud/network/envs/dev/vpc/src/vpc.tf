@@ -68,6 +68,34 @@ resource "aws_subnet" "public_subnets" {
           Resource         = "environment_at_dev" 
   }
 }
+  
+resource "aws_internet_gateway" "nat_gateway" {
+  vpc_id = aws_vpc.vpc.id
+  tags = {
+         Name ="igw-prv-dev"
+         Environment      = "dev"
+         Application_ID   = "vpc"
+         Application_Role = "Networking for environment dev"
+         Team             = "consulteanuvem-com-br-dev"
+         Customer_Group   = "consulteanuvem-dev"
+         Resource         = "environment_at_dev" 
+  }
+}
+
+resource "aws_route_table" "nat_gateway" {
+  vpc_id = aws_vpc.vpc.id
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.nat_gateway.id
+  }
+}
+
+resource "aws_route_table_association" "nat_gateway" {
+  for_each       = { for subnet in var.private_subnets : subnet.name => subnet }
+  subnet_id      = aws_subnet.public_subnets[each.value.name].id
+  route_table_id = aws_route_table.nat_gateway.id
+}
+  
 resource "aws_subnet" "private_subnets" {
   for_each                = { for subnet in var.private_subnets : subnet.name => subnet }
   vpc_id                  = aws_vpc.vpc.id
