@@ -7,9 +7,10 @@ resource "aws_vpc" "vpc" {
       Environment      = "dev"
       Application_ID   = "vpc"
       Application_Role = "Networking for environment dev"
-      Team             = "consulteanuvem-com-br-dev"
-      Customer_Group   = "consulteanuvem-dev"
-      Resource         = "environment_at_dev" 
+      Team             = "isengard-dev"
+      Customer_Group   = "isengard-dev"
+      Resource         = "environment_at_dev"
+      auto-delete      = "no"
   }
 }
 
@@ -25,9 +26,10 @@ resource "aws_internet_gateway" "igw" {
          Environment      = "dev"
          Application_ID   = "vpc"
          Application_Role = "Networking for environment dev"
-         Team             = "consulteanuvem-com-br-dev"
-         Customer_Group   = "consulteanuvem-dev"
-         Resource         = "environment_at_dev" 
+         Team             = "isengard-dev"
+         Customer_Group   = "isengard-dev"
+         Resource         = "environment_at_dev"
+         auto-delete      = "no"
   }
 }
 
@@ -38,9 +40,10 @@ resource "aws_route_table" "rtb_public" {
           Environment      = "dev"
           Application_ID   = "vpc"
           Application_Role = "Networking for environment dev"
-          Team             = "consulteanuvem-com-br-dev"
-          Customer_Group   = "consulteanuvem-dev"
-          Resource         = "environment_at_dev" 
+          Team             = "isengard-dev"
+          Customer_Group   = "isengard-dev"
+          Resource         = "environment_at_dev"
+          auto-delete      = "no"
   }
 }
 
@@ -62,27 +65,35 @@ resource "aws_subnet" "public_subnets" {
   availability_zone       = each.value.zone
   map_public_ip_on_launch = true
   cidr_block              = each.value.cidr_blocks
+  
+  # Add dependency for subnets using secondary CIDR block
+  depends_on = [
+    aws_vpc_ipv4_cidr_block_association.secondary_vpc_cidr
+  ]
+  
   tags =  {
           Name ="${each.key}"
           Environment      = "dev"
           Application_ID   = "vpc"
           Application_Role = "Networking for environment dev"
-          Team             = "consulteanuvem-com-br-dev"
-          Customer_Group   = "consulteanuvem-dev"
-          Resource         = "environment_at_dev" 
+          Team             = "isengard-dev"
+          Customer_Group   = "isengard-dev"
+          Resource         = "environment_at_dev"
+          auto-delete      = "no"
   }
 }
 
 resource "aws_eip" "eip_nat_gateway" {
-  vpc = true
+
     tags = {
          Name ="eip-nat-prv-dev"
          Environment      = "dev"
          Application_ID   = "vpc"
          Application_Role = "Networking for environment dev"
-         Team             = "consulteanuvem-com-br-dev"
-         Customer_Group   = "consulteanuvem-dev"
+         Team             = "isengard-dev"
+         Customer_Group   = "isengard-dev"
          Resource         = "environment_at_dev"
+         auto-delete      = "no"
   }
 }
 
@@ -95,9 +106,10 @@ resource "aws_nat_gateway" "nat_gateway" {
          Environment      = "dev"
          Application_ID   = "vpc"
          Application_Role = "Networking for environment dev"
-         Team             = "consulteanuvem-com-br-dev"
-         Customer_Group   = "consulteanuvem-dev"
-         Resource         = "environment_at_dev" 
+         Team             = "isengard-dev"
+         Customer_Group   = "isengard-dev"
+         Resource         = "environment_at_dev"
+         auto-delete      = "no"
   }
 }
 
@@ -112,9 +124,10 @@ resource "aws_route_table" "nat_gateway" {
           Environment      = "dev"
           Application_ID   = "vpc"
           Application_Role = "Networking for environment dev"
-          Team             = "consulteanuvem-com-br-dev"
-          Customer_Group   = "consulteanuvem-dev"
-          Resource         = "environment_at_dev" 
+          Team             = "isengard-dev"
+          Customer_Group   = "isengard-dev"
+          Resource         = "environment_at_dev"
+          auto-delete      = "no"
   }
 }
 
@@ -130,13 +143,20 @@ resource "aws_subnet" "private_subnets" {
   availability_zone       = each.value.zone
   map_public_ip_on_launch = false
   cidr_block              = each.value.cidr_blocks
+  
+  # Add dependency for subnets using secondary CIDR block
+  depends_on = [
+    aws_vpc_ipv4_cidr_block_association.secondary_vpc_cidr
+  ]
+  
   tags =  {
           Name ="${each.key}"
           Environment      = "dev"
           Application_ID   = "vpc"
           Application_Role = "Networking for environment dev"
-          Team             = "consulteanuvem-com-br-dev"
-          Customer_Group   = "consulteanuvem-dev"
-          Resource         = "environment_at_dev" 
+          Team             = "isengard-dev"
+          Customer_Group   = "isengard-dev"
+          Resource         = "environment_at_dev"
+          auto-delete      = "no"
   }
 }
