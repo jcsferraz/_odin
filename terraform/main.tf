@@ -31,7 +31,7 @@ module "eks_cluster_dev" {
   ssh_key_name = var.ssh_key_name
   
   # Admin role for cluster access
-  admin_role_arn = "arn:aws:iam::590184028041:role/aws-reserved/sso.amazonaws.com/AWSReservedSSO_OpsTamAdms_dfe8619e7180816c"
+  admin_role_arn = "arn:aws:iam::your_account_id:role/aws-reserved/sso.amazonaws.com/you_iam_role"
   
   tags = {
     Environment = var.environment
