@@ -1,0 +1,49 @@
+# AWS Configuration
+aws_region  = "us-east-1"
+environment = "dev"
+
+# VPC Configuration
+vpc                      = "vpc-dev"
+vpc_cidr_block          = "11.0.0.0/20"
+secondary_vpc_cidr_block = "12.0.0.0/20"
+
+# CIDR blocks for subnets
+cidr_blocks = [
+  "11.0.2.0/23", "11.0.4.0/23", "11.0.6.0/23", 
+  "11.0.8.0/23", "11.0.10.0/23", "11.0.12.0/23",
+  "12.0.2.0/23", "12.0.4.0/23", "12.0.6.0/23", 
+  "12.0.8.0/23", "12.0.10.0/23", "12.0.12.0/23"
+]
+
+# EKS Configuration
+eks_cluster_version = "1.30"
+
+eks_node_groups = {
+  general = {
+    instance_types = ["t3.medium", "t3.large"]
+    capacity_type  = "ON_DEMAND"
+    scaling_config = {
+      desired_size = 3
+      max_size     = 6
+      min_size     = 2
+    }
+  }
+  spot = {
+    instance_types = ["t3.medium", "t3.large", "t3.xlarge"]
+    capacity_type  = "SPOT"
+    scaling_config = {
+      desired_size = 2
+      max_size     = 5
+      min_size     = 1
+    }
+  }
+  compute = {
+    instance_types = ["t3.large", "t3.xlarge"]
+    capacity_type  = "ON_DEMAND"
+    scaling_config = {
+      desired_size = 2
+      max_size     = 4
+      min_size     = 1
+    }
+  }
+}
